@@ -1,0 +1,4 @@
+com\konkov\spring\mvc\config\MyConfig.class
+com\konkov\spring\mvc\DAO\EmployeeDAO.class
+com\konkov\spring\mvc\Employee.class
+com\konkov\spring\mvc\controllers\MyController.class
