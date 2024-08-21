@@ -1,3 +1,13 @@
+# Игнорирование файлов конфигурации
+src/main/resources/database.properties
+src/main/resources/hibernate.properties
+
+# Игнорирование файлов в target
+target/classes/database.properties
+target/classes/hibernate.properties
+target/mySpring_mvc_project/WEB-INF/classes/database.properties
+target/mySpring_mvc_project/WEB-INF/classes/hibernate.properties
+
 .idea/
 .vscode/
 
@@ -6,9 +16,6 @@ build/
 bin/
 
 *.log
-
-database.properties
-hibernate.properties
 
 *.tmp
 *.cache
