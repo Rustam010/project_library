@@ -52,7 +52,7 @@ Publish Year: ${book.publishYear}
 
 <hr>
 <br>
-<a href="/book/editBook/${book.id}">Редактировать</a>
+<a href="/book/editBook/${book.id}">Редактировать книгу</a>
 <br>
 <a href="/book">Назад</a>
 <br><br>

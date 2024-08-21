@@ -16,7 +16,7 @@
 
 <br>
 <hr>
-<a href="/employee/addNewEmployee">Create new emp</a>
+<a href="/employee/addNewEmployee">Создать нового человека</a>
 <br><br>
 <a href="/">На главную</a>
 </body>

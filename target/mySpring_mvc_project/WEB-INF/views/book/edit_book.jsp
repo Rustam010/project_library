@@ -20,10 +20,13 @@
     </c:if>
 
     Название: <form:input path="name"/>
+    <div style="color: red"><form:errors path="name"/></div>
     <br><br>
     Автор: <form:input path="author"/>
+    <div style="color: red"><form:errors path="author"/></div>
     <br><br>
     Год издания: <form:input path="publishYear"/>
+    <div style="color: red"><form:errors path="publishYear"/></div>
     <br><br>
 
     <br><br>

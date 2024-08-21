@@ -24,6 +24,6 @@
     <input type="submit" value="Создать">
 </form:form>
 <br>
-<a href="/employee">Back</a>
+<a href="/employee">Назад</a>
 </body>
 </html>

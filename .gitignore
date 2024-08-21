@@ -1,0 +1,17 @@
+.idea/
+.vscode/
+
+target/
+build/
+bin/
+
+*.log
+
+database.properties
+hibernate.properties
+
+*.tmp
+*.cache
+
+.DS_Store
+Thumbs.db

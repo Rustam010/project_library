@@ -23,7 +23,7 @@
     <div style="color: red"><form:errors path="age"/></div>
     <br><br>
 
-    <input type="submit" value="Update">
+    <input type="submit" value="Обновить">
 </form:form>
 
 </body>

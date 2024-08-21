@@ -5,11 +5,13 @@ import com.konkov.spring.mvc.entity.Employee;
 import com.konkov.spring.mvc.services.BookService;
 import com.konkov.spring.mvc.services.EmployeeService;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -53,7 +55,10 @@ public class BookController {
     }
 
     @PostMapping("/saveBook")
-    public String saveBook(@ModelAttribute("book") Book book) {
+    public String saveBook(@Valid @ModelAttribute("book") Book book, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return "book/add_book_view";
+        }
         bookService.saveBook(book);
         return "redirect:/book";
     }
@@ -67,9 +72,11 @@ public class BookController {
     }
 
     @PostMapping("/updateBook")
-    public String updateBook(@ModelAttribute("book") Book book) {
+    public String updateBook(@Valid @ModelAttribute("book") Book book, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return "book/edit_book";
+        }
         bookService.updateBook(book);
-
         return "redirect:/book";
     }
 

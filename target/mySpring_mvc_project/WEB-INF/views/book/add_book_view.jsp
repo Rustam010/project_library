@@ -13,10 +13,13 @@
 
 <form:form action="/book/saveBook" modelAttribute="book">
     Название: <form:input path="name"/>
+    <div style="color: red"><form:errors path="name"/></div>
     <br><br>
     Автор: <form:input path="author"/>
+    <div style="color: red"><form:errors path="author"/></div>
     <br><br>
     Год издания: <form:input path="publishYear"/>
+    <div style="color: red"><form:errors path="publishYear"/></div>
     <br><br>
     <input type="submit" value="Добавить">
 </form:form>

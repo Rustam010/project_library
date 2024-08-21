@@ -33,7 +33,7 @@ Age: ${getOneEmployeeAttribute.age}
 </c:if>
 <hr>
 
-<a href="/employee/editEmployee/${getOneEmployeeAttribute.id}">Edit</a>
+<a href="/employee/editEmployee/${getOneEmployeeAttribute.id}">Редактировать человека</a>
 <br/>
 
 <a href="/employee">Back</a>

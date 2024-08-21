@@ -2,6 +2,7 @@ package com.konkov.spring.mvc.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
@@ -15,15 +16,17 @@ public class Employee {
     private int id;
 
     @Column(name = "name")
-    @Size(min = 2, message = "name must be minimum 2 symbols")
+    @NotEmpty(message = "Поле не должно быть пустым")
+    @Size(min = 2, max = 30, message = "Имя должно быть в пределах от 2 до 30 символов")
     private String name;
 
     @Column(name = "surname")
-    @Size(min = 2, message = "Surname must be minimum 2 symbols")
+    @NotEmpty(message = "Поле не должно быть пустым")
+    @Size(min = 2, max = 30, message = "Поле должно быть в пределах от 2 до 30 символов")
     private String surname;
 
     @Column(name = "age")
-    @Min(value = 0, message = "Age can not be negative number")
+    @Min(value = 0, message = "Возраст не должен быть отрицательным")
     private int age;
 
     @OneToMany(mappedBy = "employee")
