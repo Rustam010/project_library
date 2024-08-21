@@ -1,10 +1,12 @@
 package com.konkov.spring.mvc.controllers;
 
-import com.konkov.spring.mvc.DAO.EmployeeDAO;
-import com.konkov.spring.mvc.Entity.Employee;
+import com.konkov.spring.mvc.entity.Employee;
+import com.konkov.spring.mvc.services.EmployeeService;
 import jakarta.validation.Valid;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -13,48 +15,50 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/employee")
 public class EmployeeController {
 
-    private final EmployeeDAO employeeDAO;
+
+    private final EmployeeService employeeService;
 
     @Autowired
-    public EmployeeController(EmployeeDAO employeeDAO) {
-        this.employeeDAO = employeeDAO;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
     @GetMapping()
     public String showFirstView(Model model) {
-        model.addAttribute("AllPeopleAttribute", employeeDAO.getAllEmployees());
+        model.addAttribute("AllPeopleAttribute", employeeService.getAllEmployees());
         return "employee/firstEmpView";
     }
 
-    @RequestMapping("/details/{id}")
-    public String showEmpDetails(@PathVariable("id") int id, Model model) {
-        Employee employee = employeeDAO.getEmpByID(id);
-        model.addAttribute("getOneEmployeeAttribute", employee);
 
-        model.addAttribute("books", employeeDAO.getBookByEmpId(id));
+
+    @GetMapping("/details/{id}")
+    public String showEmpDetails(@PathVariable("id") int id, Model model) {
+        Employee employee = employeeService.getEmpById(id);
+
+       // Hibernate.initialize(employee.getBooks());
+
+        model.addAttribute("getOneEmployeeAttribute", employee);
+        model.addAttribute("books", employee.getBooks());
 
         return "employee/show_details";
     }
 
-    @RequestMapping("/addNewEmployee")
+
+
+    @GetMapping("/addNewEmployee")
     public String addNewEmployee(Model model) {
         Employee employee = new Employee();
         model.addAttribute("employee", employee);
         return "employee/add_employee";
     }
 
-//    @RequestMapping("/addNewEmployee")      Этот метод, в данном сулчае, делает тоже само что и метод выше
-//    public String addNewEmployee(@ModelAttribute("employee") Employee employee){
-//
-//        return "add_employee";
-//    }
 
-    @RequestMapping("/saveEmployee")
+    @PostMapping("/saveEmployee")
     public String saveEmployee(@Valid @ModelAttribute("employee") Employee employee, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "employee/add_employee";
         } else {
-            employeeDAO.saveEmployee(employee);
+            employeeService.saveEmployee(employee);
             return "redirect:/employee";
         }
 
@@ -62,7 +66,7 @@ public class EmployeeController {
 
     @GetMapping("/editEmployee/{id}")
     public String editEmployee(@PathVariable("id") int id, Model model) {
-        model.addAttribute("employee", employeeDAO.getEmpByID(id));
+        model.addAttribute("employee", employeeService.getEmpById(id));
         return "employee/edit_employee";
     }
 
@@ -71,45 +75,16 @@ public class EmployeeController {
         if (bindingResult.hasErrors()) {
             return "employee/edit_employee";
         } else {
-            employeeDAO.updateEmployee(employee);
+            employeeService.updateEmployee(employee);
             return "redirect:/employee";
         }
 
     }
 
-    @RequestMapping("/deleteInfo/{id}")
+    @PostMapping("/deleteInfo/{id}")
     public String deleteEmployee(@PathVariable("id") int id) {
-        employeeDAO.deleteEmployee(id);
+        employeeService.deleteEmployee(id);
         return "redirect:/employee";
     }
-
-//    @RequestMapping("/second")
-//    public String showSecondView(Model model) {
-//        model.addAttribute("employeeDetailsAttribute", new Employee());
-//        return "ask_emp_details";
-//    }
-
-//    @RequestMapping("/third")
-//    public String showEmpDetails(HttpServletRequest request, Model model) {
-//        String empName = request.getParameter("namek");
-//        String empAge = request.getParameter("agek");
-//
-//        model.addAttribute("nameAttribute", empName);
-//        model.addAttribute("ageAttribute", empAge);
-//
-//        return "show_details";
-//    }
-
-//    @RequestMapping("/third")
-//    public String showEmpDetails(@RequestParam("namek") String empName,
-//                                 @RequestParam("agek") String empAge,
-//                                 Model model) {
-//
-//
-//        model.addAttribute("nameAttribute", empName);
-//        model.addAttribute("ageAttribute", empAge);
-//
-//        return "show_details";
-//    }
 
 }

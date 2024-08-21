@@ -17,21 +17,6 @@ Surname: ${getOneEmployeeAttribute.surname}
 Age: ${getOneEmployeeAttribute.age}
 <br/>
 
-<%--<hr>--%>
-<%--<c:choose>--%>
-<%--    <c:when test="${empty books}">--%>
-<%--        <p>Человек пока не взял ни одной книги</p>--%>
-<%--    </c:when>--%>
-<%--    <c:otherwise>--%>
-<%--        <h3>Книги, которые взял человек:</h3>--%>
-<%--        <ul>--%>
-<%--            <c:forEach var="book" items="${books}">--%>
-<%--                <li>${book.name}  (${book.author})</li>--%>
-<%--            </c:forEach>--%>
-<%--        </ul>--%>
-<%--    </c:otherwise>--%>
-<%--</c:choose>--%>
-<%--<hr>--%>
 
 <hr>
 <c:if test="${empty books}">
@@ -54,7 +39,7 @@ Age: ${getOneEmployeeAttribute.age}
 <a href="/employee">Back</a>
 <br/>
 
-<form action="/employee/deleteInfo/${getOneEmployeeAttribute.id}">
+<form action="/employee/deleteInfo/${getOneEmployeeAttribute.id}" method="post">
     <input type="submit" value="DELETE">
 </form>
 

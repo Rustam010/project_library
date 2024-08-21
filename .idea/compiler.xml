@@ -6,6 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="project_Library" />
+        <module name="project_Library_JPA" />
+        <module name="project_Library_HibernateAndJpa" />
         <module name="Project1" />
         <module name="mySpring_mvc_projectPS" />
         <module name="mySpring_mvc_project" />

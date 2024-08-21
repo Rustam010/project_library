@@ -1,80 +1,82 @@
 package com.konkov.spring.mvc.controllers;
 
-import com.konkov.spring.mvc.DAO.BookDAO;
-import com.konkov.spring.mvc.DAO.EmployeeDAO;
-import com.konkov.spring.mvc.Entity.Book;
-import com.konkov.spring.mvc.Entity.Employee;
+import com.konkov.spring.mvc.entity.Book;
+import com.konkov.spring.mvc.entity.Employee;
+import com.konkov.spring.mvc.services.BookService;
+import com.konkov.spring.mvc.services.EmployeeService;
+import jakarta.persistence.Table;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/book")
 public class BookController {
 
-    private final BookDAO bookDAO;
-    private final EmployeeDAO employeeDAO;
+
+    private final BookService bookService;
+    private final EmployeeService employeeService;
+
 
     @Autowired
-    public BookController(BookDAO bookDAO, EmployeeDAO employeeDAO) {
-        this.bookDAO = bookDAO;
-        this.employeeDAO = employeeDAO;
+    public BookController(BookService bookService, EmployeeService employeeService) {
+        this.bookService = bookService;
+        this.employeeService = employeeService;
     }
 
-    @RequestMapping()
+    @GetMapping()
     public String showAllBooks(Model model) {
-        model.addAttribute("allBooks", bookDAO.getAllBooks());
+        model.addAttribute("allBooks", bookService.getAllBooks());
         return "book/all_books_view";
     }
 
-    @RequestMapping("/details/{id}")
+    @GetMapping("/details/{id}")
     public String showBookDetails(@PathVariable("id") int id, Model model) {
-        model.addAttribute("book", bookDAO.getBookById(id));
+        model.addAttribute("book", bookService.getBookById(id));
 
-        model.addAttribute("allEmployees", employeeDAO.getAllEmployees());
+        model.addAttribute("allEmployees", employeeService.getAllEmployees());
 
-        Book book = bookDAO.getBookById(id);
-        Employee bookOwner = null;
-        if (book.getEmployeeId() != null) {
-            bookOwner = employeeDAO.getEmpByID(book.getEmployeeId());
-        }
+        Book book = bookService.getBookById(id);
+        Employee bookOwner = book.getEmployee();
         model.addAttribute("bookOwner", bookOwner);
 
 
         return "book/show_details";
     }
 
-    @RequestMapping("/addBook")
+    @GetMapping("/addBook")
     public String addNewBook(@ModelAttribute("book") Book book) {
         return "book/add_book_view";
     }
 
-    @RequestMapping("/saveBook")
+    @PostMapping("/saveBook")
     public String saveBook(@ModelAttribute("book") Book book) {
-        bookDAO.createBook(book);
+        bookService.saveBook(book);
         return "redirect:/book";
     }
 
 
-    @RequestMapping("/editBook/{id}")
+    @GetMapping("/editBook/{id}")
     public String editBook(@PathVariable("id") int id, Model model) {
-        model.addAttribute("book", bookDAO.getBookById(id));
+        model.addAttribute("book", bookService.getBookById(id));
+
         return "book/edit_book";
     }
 
-    @RequestMapping("/updateBook")
+    @PostMapping("/updateBook")
     public String updateBook(@ModelAttribute("book") Book book) {
-        bookDAO.updateBook(book);
+        bookService.updateBook(book);
+
         return "redirect:/book";
     }
 
 
-    @RequestMapping("/delete/{id}")
+    @PostMapping("/delete/{id}")
     public String deleteBook(@PathVariable("id") int id) {
-        bookDAO.deleteBook(id);
+        bookService.deleteBook(id);
         return "redirect:/book";
     }
 
@@ -85,16 +87,21 @@ ________________________________________________________________________________
 
 
     // Обработка назначения книги
-    @RequestMapping("/assignBook")
+
+    @PostMapping("/assignBook")
     public String assignBook(@ModelAttribute("bookId") int bookId, @ModelAttribute("employeeId") int employeeId,
                              Model model) {
-        bookDAO.assignBookToEmployee(bookId, employeeId);
+        Employee employee = employeeService.getEmpById(employeeId);
+
+        bookService.assignBookToEmployee(bookId, employee);
+
         return "redirect:/book/details/" + bookId;
     }
 
-    @RequestMapping("/releaseBook")
+
+    @PostMapping("/releaseBook")
     public String releaseBook(@ModelAttribute("bookId") int bookId) {
-        bookDAO.releaseBookFromEmp(bookId);
+        bookService.releaseBookFromEmp(bookId);
         return "redirect:/book/details/" + bookId;
     }
 

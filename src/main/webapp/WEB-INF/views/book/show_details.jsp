@@ -30,7 +30,7 @@ Publish Year: ${book.publishYear}
     </form>
 </c:if>
 
-<c:if test="${bookOwner == null}">
+<c:if test="${book.employee == null}">
     <p>Книга пока-что никому не принадлежит</p>
 
     <%--Форма назначения книги человеку--%>
@@ -56,7 +56,7 @@ Publish Year: ${book.publishYear}
 <br>
 <a href="/book">Назад</a>
 <br><br>
-<form action="/book/delete/${book.id}">
+<form action="/book/delete/${book.id}" method="post">
     <input type="submit" value="Удалить книгу">
 </form>
 
