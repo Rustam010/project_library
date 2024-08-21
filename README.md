@@ -1,4 +1,4 @@
-Spring MVC + JDBC Template App
+Spring MVC App
 
 Функционал:
 1) Страница добавления, изменения и удаления человека.
