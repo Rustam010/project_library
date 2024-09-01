@@ -1,11 +1,7 @@
 # Проект: Электронная библиотека
 
 ## Используемые технологии:
-
-- **Spring Framework**
-- **PostgreSQL**
-- **Hibernate**
-- **Thymeleaf**
+Spring Framework, PostgreSQL, Hibernate, Thymeleaf
 
 ## Функционал:
 
